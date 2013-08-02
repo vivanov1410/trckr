@@ -1,0 +1,38 @@
+<section id="fuelling">
+  <header>
+    <h1>Add Fuelling</h1>
+  </header>
+  <form class="form-horizontal" name='fuellingForm' ng-submit="submitFuelling(fuelling, fuellingForm)">
+    
+    <div class="form-group">
+      <label for="country" class="col-lg-2 control-label">Country</label>
+      <div class="col-lg-6">
+        <select class="form-control" ng-model="fuelling.country" ng-options="country.name for country in countries" ng-change="updateValues(fuelling.country)"></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="state" class="col-lg-2 control-label">State</label>
+      <div class="col-lg-6">
+        <select class="form-control" id='state' ng-model='fuelling.state' ng-options="fullStateName(state) for state in states"></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="volue" class="col-lg-2 control-label">Volume</label>
+      <div class="col-lg-4">
+        <input type="text" class="form-control" id="volume" placeholder="Volume" required ng-model='fuelling.volume'>
+      </div>
+      <div class="col-lg-2">
+        <input type="text" class="form-control" id="volumeType" ng-model='fuelling.volumeType.name' ng-disabled="true">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-offset-2 col-lg-6">
+        <button type="submit" class="btn btn-primary" ng-disabled="fuellingForm.$invalid">Submit</button>
+      </div>
+    </div>
+
+  </form>
+</section>

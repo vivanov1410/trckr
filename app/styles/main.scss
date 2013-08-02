@@ -1,0 +1,35 @@
+/* IMPORTS
+ ******************************** */
+@import 'fonts';
+
+/* GENERAL
+ ******************************** */
+body {
+}
+
+.invisible {
+  display: none;
+} 
+
+/* NAVIGATION
+ ******************************** */
+.brand {
+  text-transform: uppercase;
+}
+
+/* MAIN SECTION
+ ******************************** */
+#main .alert {
+  display: inline-block;
+  float: right;
+}
+
+/* FOOTER
+ ******************************** */
+body > footer {
+  text-align: center;
+}
+
+body > footer ul {
+  list-style: none;
+}
