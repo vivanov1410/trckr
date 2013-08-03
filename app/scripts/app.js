@@ -1,6 +1,6 @@
 'use strict';
 
-var trckrApp = angular.module('trckrApp', ['ngResource', 'ui.state'])
+var trckrApp = angular.module('trckrApp', ['ngResource', 'ui.state', 'ui.date'])
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
     
     //  any unmatched url send to /

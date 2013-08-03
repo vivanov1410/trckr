@@ -5,13 +5,60 @@ trckrApp
 
     var api = 'https://api.parse.com/1';
 
-    var questionResource = $resource(
-      api + '/classes/Question/:id',
+    var fuellingResource = $resource(
+      api + '/classes/Fuelling/:id',
       {
         id: '@id'
       });
 
     return {
+
+      getAllFuellings: function() {
+        var deferred = $q.defer();
+
+        $log.log('retrieving all fuellings');
+        fuellingResource.get({},
+          function(response) {
+            $log.log('retrieved all fuellings:', response.results.length);
+            
+            // convert dates to Date objects
+            for (var i = response.results.length - 1; i >= 0; i--) {
+              response.results[i].date = new Date(Date.parse(response.results[i].date.iso));
+            };
+
+            deferred.resolve(response.results);
+          },
+          function(response) {
+            $log.error('failed to retrieve all fuellings', response)
+            deferred.reject(response);
+          });
+
+        return deferred.promise;
+      },
+
+      addFuelling: function(fuelling) {
+        var deferred = $q.defer();
+
+        // change date to match Parse.com date format
+        fuelling.date = {
+          "__type": "Date",
+          "iso": fuelling.date
+        }
+
+        $log.log('adding fuelling');
+        fuellingResource.save(fuelling, 
+          function (response) {
+            $log.log('added fuelling:', response.objectId);
+            deferred.resolve(response);
+          },
+          function (response) {
+            $log.error('failed to add fuelling:', response);
+            deferred.reject(response);
+          });
+
+        return deferred.promise;
+      },
+
       getRandomQuestion: function() {
         var deferred = $q.defer();
 

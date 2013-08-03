@@ -1,8 +1,12 @@
 <section id="fuelling">
-  <header>
-    <h1>Add Fuelling</h1>
-  </header>
+  <legend>Add Fuelling</legend>
   <form class="form-horizontal" name='fuellingForm' ng-submit="submitFuelling(fuelling, fuellingForm)">
+    <div class="form-group">
+      <label for="date" class="col-lg-2 control-label">Date</label>
+      <div class="col-lg-6">
+        <input ui-date required ng-model="fuelling.date">
+      </div>
+    </div>
     
     <div class="form-group">
       <label for="country" class="col-lg-2 control-label">Country</label>
@@ -19,7 +23,7 @@
     </div>
 
     <div class="form-group">
-      <label for="volue" class="col-lg-2 control-label">Volume</label>
+      <label for="volume" class="col-lg-2 control-label">Volume</label>
       <div class="col-lg-4">
         <input type="text" class="form-control" id="volume" placeholder="Volume" required ng-model='fuelling.volume'>
       </div>
@@ -35,4 +39,26 @@
     </div>
 
   </form>
+  
+  <legend>Fuelling History</legend>
+  <table class='table table-hover'>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Country</th>
+        <th>State</th>
+        <th>Volume</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="fuelling in fuellings | orderBy:'date':true">
+        <td>{{fuelling.date | date:'mediumDate'}}</td>
+        <td>{{fuelling.country.name}}</td>
+        <td>{{fuelling.state.abbreviation}}</td>
+        <td>{{fuelling.volume}}</td>
+        <td>{{fuelling.volumeType.name}}</td>
+      </tr>
+    </tbody>
+  </table>
 </section>

@@ -5,6 +5,14 @@ trckrApp
     
   
     return {
+      getAllFuellings: function() {
+        return parseService.getAllFuellings();
+      },
+
+      addFuelling: function(fuelling) {
+        return parseService.addFuelling(fuelling);
+      },
+
       getVolumeType: function(country) {
         if( country.name === 'Canada' ) {
           return { name: 'Litres', abbreviation: 'L' };
