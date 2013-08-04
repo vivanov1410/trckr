@@ -40,7 +40,19 @@ trckrApp
 
       // logs in a user
       login: function(user) {
+        return parse.login(user).then(
+          function(response) {
+            // if succeeded then
+            // save user info and session token to local storage
+            storageService.set('trckr.user', JSON.stringify(response));
 
+            // set current user
+            currentUser = response;
+            logged = true;
+          },
+          function(response) {
+
+          });
       },
 
       // logs out a user

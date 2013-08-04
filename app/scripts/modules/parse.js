@@ -47,7 +47,7 @@ parseModule.provider('parse', function() {
               user.objectId = data.objectId;
               user.sessionToken = data.sessionToken;
               user.password = null;
-              
+
               deferred.resolve(user);
             }).
             error(function(data, status, headers, config) {
@@ -57,6 +57,24 @@ parseModule.provider('parse', function() {
 
           return deferred.promise;
         },
+
+        // logs user in
+        login: function(user) {
+          var deferred = $q.defer();
+
+          $log.log('logging in as', user.username);
+          Parse._request('GET', '/login', null, user).
+            success(function(data, status, headers, config) {
+              $log.log('logged in as', user.username);
+              deferred.resolve(data);
+            }).
+            error(function(data, status, headers, config) {
+              $log.log('failed to login', data, status);
+              deferred.reject(data);
+            }); 
+
+          return deferred.promise;
+        }
       };
 
       return Parse;
