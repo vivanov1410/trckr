@@ -3,6 +3,9 @@
 trckrApp
   .controller('FuellingCtrl', ['$scope', 'dataService', function ($scope, dataService) {
 
+    // set page title
+    $window.document.title = 'Keeps your trip organized | Trckr';
+
     // clear form's elements
     var initForm = function() {
       // init fuelling object

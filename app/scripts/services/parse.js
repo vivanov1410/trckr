@@ -11,8 +11,32 @@ trckrApp
         id: '@id'
       });
 
+    var userResource = $resource(
+      api + '/users/:id',
+      {
+        id: '@id'
+      });
+
     return {
 
+      // creates new user
+      signup: function(user) {
+        var deferred = $q.defer();
+
+        $log.log('creating a new user');
+        userResource.save(user,
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(response) {
+            $log.log('failed to create a new user:', response);
+            deferred.reject(response);
+          });
+
+        return deferred.promise;
+      },
+
+      // retrieves all fuelings
       getAllFuellings: function() {
         var deferred = $q.defer();
 

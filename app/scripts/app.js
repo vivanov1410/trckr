@@ -1,7 +1,7 @@
 'use strict';
 
-var trckrApp = angular.module('trckrApp', ['ngResource', 'ui.state', 'ui.date'])
-  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
+var trckrApp = angular.module('trckrApp', ['appConfig', 'ngResource', 'ui.state', 'ui.date', 'parse'])
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'parseProvider', 'parseConfig', function ($stateProvider, $urlRouterProvider, $httpProvider, parseProvider, parseConfig) {
     
     //  any unmatched url send to /
     $urlRouterProvider.otherwise("/") ;
@@ -28,6 +28,9 @@ var trckrApp = angular.module('trckrApp', ['ngResource', 'ui.state', 'ui.date'])
         templateUrl: 'views/fuelling.html',
         controller: 'FuellingCtrl'
       });
+
+    // initialize Parse
+    parseProvider.init(parseConfig);
 
     // set default http headers for parse service
     $httpProvider.defaults.headers.common['X-Parse-Application-Id'] = 'ZmCmnkbxuyVKQzPhersdfeorJ9dYOvpgr9q3eHXX'; // TODO: extract to separate config file
