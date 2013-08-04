@@ -27,6 +27,11 @@ var trckrApp = angular.module('trckrApp', ['appConfig', 'ngResource', 'ui.state'
         url: '/fuelling',
         templateUrl: 'views/fuelling.html',
         controller: 'FuellingCtrl'
+      })
+      .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl'
       });
 
     // initialize Parse

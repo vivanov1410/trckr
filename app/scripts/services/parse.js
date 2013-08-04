@@ -19,23 +19,6 @@ trckrApp
 
     return {
 
-      // creates new user
-      signup: function(user) {
-        var deferred = $q.defer();
-
-        $log.log('creating a new user');
-        userResource.save(user,
-          function(response) {
-            deferred.resolve(response);
-          },
-          function(response) {
-            $log.log('failed to create a new user:', response);
-            deferred.reject(response);
-          });
-
-        return deferred.promise;
-      },
-
       // retrieves all fuelings
       getAllFuellings: function() {
         var deferred = $q.defer();
@@ -67,7 +50,15 @@ trckrApp
         fuelling.date = {
           "__type": "Date",
           "iso": fuelling.date
-        }
+        };
+
+        // add default user ACL
+        fuelling.ACL = {
+          "u7nnExQ5I0": {
+            "read": true,
+            "write": true 
+          }
+        };
 
         $log.log('adding fuelling');
         fuellingResource.save(fuelling, 

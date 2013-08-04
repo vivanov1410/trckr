@@ -1,10 +1,10 @@
 'use strict';
 
 trckrApp
-  .controller('FuellingCtrl', ['$scope', 'dataService', function ($scope, dataService) {
+  .controller('FuellingCtrl', ['$scope', '$window', 'dataService', function ($scope, $window, dataService) {
 
     // set page title
-    $window.document.title = 'Keeps your trip organized | Trckr';
+    $window.document.title = 'Fuelling | Trckr';
 
     // clear form's elements
     var initForm = function() {
