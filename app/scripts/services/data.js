@@ -1,8 +1,25 @@
 'use strict';
 
 trckrApp
-  .factory('dataService', ['parseService', function (parseService) {
+  .factory('dataService', ['parseService', 'parse', function (parseService, parse) {
     
+    // define models
+    
+    function Model(className) {
+      this.className = className;
+    };
+
+    console.log('parse model', parse.Model);
+
+    function Fuelling(className) {
+      parse.Model.call(this, className);
+    }
+
+    Fuelling.prototype = Object.create(parse.Model.prototype);
+    Fuelling.prototype.constructor = Fuelling;
+
+    var fuelling = new Fuelling('marusya');
+    console.log('fuelling', fuelling);
   
     return {
       getAllFuellings: function() {
@@ -10,7 +27,8 @@ trckrApp
       },
 
       addFuelling: function(fuelling) {
-        return parseService.addFuelling(fuelling);
+        //return parseService.addFuelling(fuelling);
+        return parse.add()
       },
 
       getVolumeType: function(country) {

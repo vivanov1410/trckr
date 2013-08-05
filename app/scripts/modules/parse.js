@@ -58,7 +58,7 @@ parseModule.provider('parse', function() {
           return deferred.promise;
         },
 
-        // logs user in
+        // signs in user
         login: function(user) {
           var deferred = $q.defer();
 
@@ -76,6 +76,16 @@ parseModule.provider('parse', function() {
           return deferred.promise;
         }
       };
+
+      // base class all classes should inherit from
+      Parse.Model = (function() {
+        function Model(className, attributes) {
+          this.className = className;
+          this.attributes = attributes;    
+        }
+
+        return Model;
+      })();
 
       return Parse;
     }

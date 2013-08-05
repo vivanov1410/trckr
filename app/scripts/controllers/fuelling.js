@@ -37,7 +37,6 @@ trckrApp
     $scope.submitFuelling = function(fuelling, form) {
       if( form.$valid ) {
         // if form is valid then save to database
-        //console.log(fuelling);
         dataService.addFuelling(fuelling).then(
           function(response) {
             initForm();
@@ -51,9 +50,5 @@ trckrApp
     }
 
     initForm();
-    var d = window.Date;
-    Date.parse('2013-08-03T02:44:59.461Z');
-    var dd = new Date(Date.parse('2013-08-03T02:44:59.461Z'));
-    console.log(dd.toDateString());
 
   }]);
