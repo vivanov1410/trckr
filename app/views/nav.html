@@ -14,8 +14,7 @@
 
     <!-- Place everything within .navbar-collapse to hide it until above 768px -->
     <div class="nav-collapse collapse navbar-responsive-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="#/">Home</a></li>
+      <ul class="nav navbar-nav" ng-show="logged()">
         <li><a href="#/fuelling">Fuelling</a></li>
       </ul>
       <ul class="nav navbar-nav pull-right" ng-hide="logged()">

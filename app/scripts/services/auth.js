@@ -3,10 +3,20 @@
 trckrApp
   .factory('authService', ['parse', 'storageService', function (parse, storageService) {
     
+    var updateDataStore = function() {
+      // set session token for parse module
+      if( typeof currentUser !== 'undefined' && currentUser !== null ) {
+        parse.auth.user = currentUser;
+        parse.auth.sessionToken = currentUser.sessionToken;
+      }
+    };
+
     var logged = false;
     var currentUser = storageService.get('trckr.user');
     if( typeof currentUser !== 'undefined' && currentUser !== null ) {
       logged = true;
+
+      updateDataStore();
     }
   
     return {
@@ -32,6 +42,7 @@ trckrApp
             // set current user
             currentUser = user;
             logged = true;
+            updateDataStore();
           },
           function(response) {
 
@@ -49,6 +60,7 @@ trckrApp
             // set current user
             currentUser = response;
             logged = true;
+            updateDataStore();
           },
           function(response) {
 
@@ -63,6 +75,7 @@ trckrApp
         // set current user to null
         currentUser = null;
         logged = false;
+        updateDataStore();
       }
     };
   }])

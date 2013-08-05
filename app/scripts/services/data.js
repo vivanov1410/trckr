@@ -4,31 +4,32 @@ trckrApp
   .factory('dataService', ['parseService', 'parse', function (parseService, parse) {
     
     // define models
-    
-    function Model(className) {
-      this.className = className;
-    };
-
-    console.log('parse model', parse.Model);
-
-    function Fuelling(className) {
-      parse.Model.call(this, className);
+    function Fuelling(attributes) {
+      parse.Model.call(this, 'Fuelling', attributes);
     }
 
     Fuelling.prototype = Object.create(parse.Model.prototype);
     Fuelling.prototype.constructor = Fuelling;
-
-    var fuelling = new Fuelling('marusya');
-    console.log('fuelling', fuelling);
   
     return {
+
+      // retrieves all fuellings
       getAllFuellings: function() {
-        return parseService.getAllFuellings();
+        //return parseService.getAllFuellings();
+        var obj = new Fuelling({});
+        return obj.query();
       },
 
+      // adds fuelling to database
       addFuelling: function(fuelling) {
-        //return parseService.addFuelling(fuelling);
-        return parse.add()
+        var obj = new Fuelling({
+          date: fuelling.date,
+          country: fuelling.country,
+          state: fuelling.state,
+          volume: fuelling.volume,
+          volumeType: fuelling.volumeType
+        });
+        return obj.save();
       },
 
       getVolumeType: function(country) {

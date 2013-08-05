@@ -79,10 +79,80 @@ parseModule.provider('parse', function() {
 
       // base class all classes should inherit from
       Parse.Model = (function() {
+        
+        // contructor
         function Model(className, attributes) {
           this.className = className;
           this.attributes = attributes;    
         }
+
+        // saves record to database
+        Model.prototype.save = function() {
+          var _this = this;
+          var deferred = $q.defer();
+
+          // convert javascript date to parse date
+          // date typeof Date
+          this.attributes.date = {
+            "__type": "Date",
+            "iso": this.attributes.date
+          };
+
+          // add default user ACL
+          this.attributes.ACL = {};
+          this.attributes.ACL[Parse.auth.user.objectId] = {
+            read: true,
+            write: true 
+          };
+
+          $log.log('creating', _this.className);
+          Parse._request('POST', '/classes/' + this.className, this.attributes, null).
+            success(function(data, status, headers, config) {
+              $log.log('created', _this.className, data.objectId);
+              _this.objectId = data.objectId;
+              deferred.resolve(data);
+            }).
+            error(function(data, status, headers, config) {
+              $log.log('failed to create', _this.className, status, data);
+              deferred.reject(data);
+            });
+
+          return deferred.promise;
+        };
+
+        // retrieves all records from database
+        Model.prototype.query = function() {
+          var _this = this;
+          var deferred = $q.defer();
+
+          $log.log('retrieving all', _this.className);
+          Parse._request('GET', '/classes/' + this.className, null, null).
+            success(function(data, status, headers, config) {
+              $log.log('retrieved all', _this.className, data.results.length);
+
+              // convert parse date objects to javascript Date objects
+              for( var i = data.results.length - 1; i >= 0; i-- ) {
+                data.results[i].date = new Date(Date.parse(data.results[i].date.iso));
+              };
+
+              deferred.resolve(data.results);
+            }).
+            error(function(data, status, headers, config) {
+              $log.error('failed to retrieve all', _this.className);
+              deferred.reject(data);
+            });
+
+          return deferred.promise;
+        };
+
+        // create: ->
+        //   Parse._request('POST', @constructor, @encodeParse())
+        //   .then (response) =>
+        //     @objectId = response.data.objectId
+        //     @createdAt = response.data.createdAt
+        //     if token = response.data.sessionToken
+        //       @sessionToken = token
+        //     return @
 
         return Model;
       })();

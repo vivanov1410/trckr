@@ -1,7 +1,13 @@
 'use strict';
 
 trckrApp
-  .controller('FuellingCtrl', ['$scope', '$window', 'dataService', function ($scope, $window, dataService) {
+  .controller('FuellingCtrl', ['$scope', '$window', '$location', 'dataService', 'authService', function ($scope, $window, $location, dataService, authService) {
+
+    // secured page, check if user is logged in
+    if( !authService.logged() ) {
+      $location.url('login');
+      return;
+    }
 
     // set page title
     $window.document.title = 'Fuelling | Trckr';
